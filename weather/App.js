@@ -55,7 +55,36 @@ export default class App extends React.Component {
   };
 
   componentDidMount() {
-    this.handleUpdateLocation("Makassar");
+    this.handleUpdateLocation("Jakarta");
+  }
+
+  renderContent() {
+    const { isError } = this.state;
+
+    return (
+      <View>
+        {isError && (
+          <Text style={[styles.smallText, styles.textStyle]}>
+            Could not load weather, please try a different city.
+          </Text>
+        )}
+        {!isError && this.renderInfo()}
+      </View>
+    );
+  }
+
+  renderInfo() {
+    const { isError, location, weather, temperature } = this.state;
+
+    return (
+      <View>
+        <Text style={[styles.largeText, styles.textStyle]}>{location}</Text>
+        <Text style={[styles.smallText, styles.textStyle]}>{weather}</Text>
+        <Text style={[styles.largeText, styles.textStyle]}>
+          {Math.round(temperature)}°
+        </Text>
+      </View>
+    );
   }
 
   render() {
@@ -77,25 +106,7 @@ export default class App extends React.Component {
 
             {!isLoading && (
               <View>
-                {isError && (
-                  <Text style={[styles.smallText, styles.textStyle]}>
-                    Could not load weather, please try a different city.
-                  </Text>
-                )}
-
-                {!isError && (
-                  <View>
-                    <Text style={[styles.largeText, styles.textStyle]}>
-                      {location}
-                    </Text>
-                    <Text style={[styles.smallText, styles.textStyle]}>
-                      {weather}
-                    </Text>
-                    <Text style={[styles.largeText, styles.textStyle]}>
-                      {Math.round(temperature)}°
-                    </Text>
-                  </View>
-                )}
+                {this.renderContent()}
 
                 <SearchInput
                   placeholder="Search any city"
