@@ -44,6 +44,15 @@ export default class SearchInput extends Component {
   }
 }
 
+SearchInput.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  placeholder: PropTypes.string
+};
+
+SearchInput.defaultProps = {
+  placeholder: ""
+};
+
 const styles = StyleSheet.create({
   container: {
     height: 40,
