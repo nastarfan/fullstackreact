@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'center'm
+    textAlign: 'center',
   }
   timerList: {
     paddingBottom: 15,
