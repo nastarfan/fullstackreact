@@ -12,7 +12,7 @@ export default function EditableTimer({
   editFormOpen
 }) {
   if (editFormOpen) {
-    return <TimeForm id={id} title={title} project={project} />;
+    return <TimerForm id={id} title={title} project={project} />;
   }
   return (
     <Timer

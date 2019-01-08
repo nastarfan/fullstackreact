@@ -35,20 +35,20 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   appContainer: {
-    flex: 1,
+    flex: 1
   },
   titleContainer: {
     paddingTop: 35,
     paddingBottom: 15,
     borderBottomWidth: 1,
-    borderBottomColor: "#D607DA",
+    borderBottomColor: "#D607DA"
   },
   title: {
     fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  }
+    fontWeight: "bold",
+    textAlign: "center"
+  },
   timerList: {
-    paddingBottom: 15,
+    paddingBottom: 15
   }
 });

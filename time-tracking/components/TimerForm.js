@@ -5,7 +5,7 @@ import TimerButton from "./TimerButton";
 
 export default function TimerForm({ id, title, project }) {
   const submitText = id ? "Update" : "Create";
-  render(
+  return (
     <View style={styles.formContainer}>
       <View style={styles.attributContainer}>
         <Text style={styles.textInputTitle}>Title</Text>
@@ -35,37 +35,37 @@ export default function TimerForm({ id, title, project }) {
   );
 }
 
-const styles = StyleSheet.create{
+const styles = StyleSheet.create({
   formContainer: {
-    backgroundColor: 'white',
-    borderColor: '#D6D7DA',
+    backgroundColor: "white",
+    borderColor: "#D6D7DA",
     borderWidth: 2,
     borderRadius: 10,
     padding: 15,
     margin: 15,
-    marginBottom: 0,
+    marginBottom: 0
   },
   attributContainer: {
-    marginVertical: 8,
+    marginVertical: 8
   },
   textInputContainer: {
-    borderColor: '#D6D7DA',
+    borderColor: "#D6D7DA",
     borderRadius: 2,
     borderWidth: 1,
-    marginBottom: 5,
+    marginBottom: 5
   },
   textInput: {
     height: 30,
     padding: 5,
-    fontSize: 12,
+    fontSize: 12
   },
   textInputTitle: {
     fontSize: 14,
-    fontWeight: 'bold',
-    marginBottom: 5,
+    fontWeight: "bold",
+    marginBottom: 5
   },
   buttonGroup: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-}
+    flexDirection: "row",
+    justifyContent: "space-between"
+  }
+});
