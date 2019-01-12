@@ -11,6 +11,7 @@ export default class EditableTimer extends Component {
   render() {
     const { id, title, project, elapsed, isRunning } = this.props;
     const { editFormOpen } = this.state;
+    console.log(id);
 
     if (editFormOpen) {
       return <TimerForm id={id} title={title} project={project} />;

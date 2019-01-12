@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   title: {
-    fontSize: 4,
+    fontSize: 14,
     fontWeight: "bold"
   },
   elapsedTime: {

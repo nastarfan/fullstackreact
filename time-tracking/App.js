@@ -25,23 +25,24 @@ export default class App extends React.Component {
     ]
   };
   render() {
-    const { timers } = this.prop;
+    const { timers } = this.state;
     return (
       <View style={styles.appContainer}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Timer</Text>
         </View>
         <ScrollView style={styles.timerList}>
-          <ToggleableTimerForm isOpen={false} />
-          {timers.map(({ id, title, project, elapsed, isRunning }) => {
+          <ToggleableTimerForm />
+          {timers.map(({ id, title, project, elapsed, isRunning }) => (
             <EditableTimer
+              key={id}
               id={id}
               title={title}
               project={project}
               elapsed={elapsed}
               isRunning={isRunning}
-            />;
-          })}
+            />
+          ))}
         </ScrollView>
       </View>
     );
