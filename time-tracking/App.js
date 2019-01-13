@@ -4,6 +4,7 @@ import uuidv4 from "uuid/v4";
 
 import EditableTimer from "./components/EditableTimer";
 import ToggleableTimerForm from "./components/ToggleableTimerForm";
+import { newTimer } from "./utils/TimerUtils";
 
 export default class App extends React.Component {
   state = {
@@ -24,6 +25,38 @@ export default class App extends React.Component {
       }
     ]
   };
+
+  handleCreateFormSubmit = timer => {
+    // update state with the new timer added
+    const { timers } = this.state;
+    this.setState({
+      timers: [newTimer(timer), ...timers]
+    });
+  };
+
+  handleUpdateFormSubmit = attrs => {
+    // check the id, find in array with the same id, update values, update state
+    const { timers } = this.state;
+
+    this.setState({
+      timers: timers.map(timer => {
+        if (timer.id === attrs.id) {
+          const { title, project } = attrs;
+
+          // return that particular timer object with updated title and project
+          return {
+            ...timer,
+            title,
+            project
+          };
+        }
+
+        // return the same timer object without changing anything
+        return timer;
+      })
+    });
+  };
+
   render() {
     const { timers } = this.state;
     return (
@@ -32,7 +65,7 @@ export default class App extends React.Component {
           <Text style={styles.title}>Timer</Text>
         </View>
         <ScrollView style={styles.timerList}>
-          <ToggleableTimerForm />
+          <ToggleableTimerForm onFormSubmit={this.handleCreateFormSubmit} />
           {timers.map(({ id, title, project, elapsed, isRunning }) => (
             <EditableTimer
               key={id}
@@ -41,6 +74,7 @@ export default class App extends React.Component {
               project={project}
               elapsed={elapsed}
               isRunning={isRunning}
+              onSubmit={this.handleUpdateFormSubmit}
             />
           ))}
         </ScrollView>

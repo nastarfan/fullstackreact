@@ -6,13 +6,23 @@ import TimerButton from "./TimerButton";
 export default class TimerForm extends Component {
   constructor(props) {
     super(props);
-    const { id, title, project } = this.prop;
+
+    const { id, title, project } = this.props;
 
     this.state = {
       title: id ? title : "",
       project: id ? project : ""
     };
   }
+
+  handleSubmit = () => {
+    const { id, onFormSubmit } = this.props;
+    const { title, project } = this.state;
+
+    onFormSubmit({ id, title, project });
+  };
+
+  onFormClose = () => {};
 
   handleTitleChange = title => {
     this.setState({ title });
@@ -23,7 +33,7 @@ export default class TimerForm extends Component {
   };
 
   render() {
-    const { id } = this.props;
+    const { id, onFormClose } = this.props;
     const { title, project } = this.state;
     const submitText = id ? "Update" : "Create";
     return (
@@ -51,8 +61,18 @@ export default class TimerForm extends Component {
           </View>
         </View>
         <View style={styles.buttonGroup}>
-          <TimerButton small color="#21BA45" title={submitText} />
-          <TimerButton small color="#DB2828" title="Cancel" />
+          <TimerButton
+            small
+            color="#21BA45"
+            title={submitText}
+            onPress={this.handleSubmit}
+          />
+          <TimerButton
+            small
+            color="#DB2828"
+            title="Cancel"
+            onPress={this.onFormClose}
+          />
         </View>
       </View>
     );
