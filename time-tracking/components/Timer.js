@@ -19,9 +19,10 @@ export default class Timer extends Component {
 
   handleRemovePress = () => {
     const { onRemovePress } = this.props;
-    const { id, title, project, elapsed } = this.state;
+    const { id } = this.state;
 
-    onRemovePress({ id, title, project, elapsed });
+    // we don't need to provide the whole object, id for identifier should suffice
+    onRemovePress(id);
   };
 
   render() {
