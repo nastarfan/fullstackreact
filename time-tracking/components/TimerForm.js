@@ -22,8 +22,6 @@ export default class TimerForm extends Component {
     onFormSubmit({ id, title, project });
   };
 
-  onFormClose = () => {};
-
   handleTitleChange = title => {
     this.setState({ title });
   };
@@ -71,7 +69,7 @@ export default class TimerForm extends Component {
             small
             color="#DB2828"
             title="Cancel"
-            onPress={this.onFormClose}
+            onPress={onFormClose}
           />
         </View>
       </View>

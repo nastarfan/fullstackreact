@@ -21,6 +21,7 @@ export default class ToggleableTimerForm extends Component {
   };
 
   handleFormClose = () => {
+    console.log("bummer");
     this.setState({ isOpen: false });
   };
 

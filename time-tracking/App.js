@@ -57,6 +57,30 @@ export default class App extends React.Component {
     });
   };
 
+  handleRemoveFormSubmit = timer => {
+    // take timers array, find the same timer object, remove the object from array, update state with new array
+    console.log("removing...");
+    let i = 0;
+    tempTimers = [...this.state.timers];
+
+    // for (i = 0; i < tempTimers.length; i++) {
+    //   if (tempTimers[i].id === timer.id) {
+    //     tempTimers.splice(i, 1);
+    //     break;
+    //   }
+    // }
+
+    this.setState(prevState => ({
+      timers: prevState.timers.filter(prevTimer => prevTimer.id !== timer.id)
+    }));
+
+    // console.log(tempTimers);
+
+    // this.setState({
+    //   timers: tempTimers
+    // });
+  };
+
   render() {
     const { timers } = this.state;
     return (
@@ -75,6 +99,7 @@ export default class App extends React.Component {
               elapsed={elapsed}
               isRunning={isRunning}
               onSubmit={this.handleUpdateFormSubmit}
+              onRemovePress={this.handleRemoveFormSubmit}
             />
           ))}
         </ScrollView>

@@ -9,7 +9,7 @@ export default class EditableTimer extends Component {
   };
 
   handleFormSubmit = timer => {
-    const { onFormSubmit } = this.props;
+    const { onSubmit } = this.props;
 
     onFormSubmit(timer);
     this.closeForm();
@@ -32,9 +32,8 @@ export default class EditableTimer extends Component {
   }
 
   render() {
-    const { id, title, project, elapsed, isRunning } = this.props;
+    const { id, title, project, elapsed, isRunning, onRemovePress } = this.props;
     const { editFormOpen } = this.state;
-    console.log(id);
 
     if (editFormOpen) {
       return (
@@ -55,6 +54,7 @@ export default class EditableTimer extends Component {
         elapsed={elapsed}
         isRunning={isRunning}
         onEditPress={this.handleEditPress}
+        onRemovePress={onRemovePress}
       />
     );
   }
