@@ -5,29 +5,38 @@ import { millisecondsToHuman } from "../utils/TimerUtils";
 import TimerButton from "./TimerButton";
 
 export default class Timer extends Component {
-  constructor(props) {
-    super(props);
-    const { id, title, project, elapsed } = this.props;
-
-    this.state = {
-      id,
-      title,
-      project,
-      elapsed
-    };
-  }
-
   handleRemovePress = () => {
-    const { onRemovePress } = this.props;
-    const { id } = this.state;
+    const { id, onRemovePress } = this.props;
 
     // we don't need to provide the whole object, id for identifier should suffice
     onRemovePress(id);
   };
 
+  handleStartPress = () => {
+    const { id, onStartPress } = this.props;
+
+    onStartPress(id);
+  };
+
+  handleStopPress = () => {
+    const { id, onStopPress } = this.props;
+
+    onStopPress(id);
+  };
+
+  renderActionButton = () => {
+    const { isRunning } = this.props;
+    return (
+      <TimerButton
+        color={isRunning ? "red" : "green"}
+        title={isRunning ? "Stop" : "Start"}
+        onPress={isRunning ? this.handleStopPress : this.handleStopPress}
+      />
+    );
+  };
+
   render() {
-    const { onEditPress } = this.props;
-    const { title, project, elapsed } = this.state;
+    const { title, project, elapsed, onEditPress } = this.props;
     const elapsedString = millisecondsToHuman(elapsed);
 
     return (
@@ -44,7 +53,7 @@ export default class Timer extends Component {
             onPress={this.handleRemovePress}
           />
         </View>
-        <TimerButton color="#21BA45" title="Start" />
+        {this.renderActionButton()}
       </View>
     );
   }

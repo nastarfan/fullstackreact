@@ -13,18 +13,42 @@ export default class App extends React.Component {
         id: uuidv4(),
         title: "Mown the lawn",
         project: "Hourse Chores",
-        elapsed: "8986300",
+        elapsed: 8986300,
         isRunning: true
       },
       {
         id: uuidv4(),
         title: "Bake squash",
         project: "Kitchen Chores",
-        elapsed: "3986385",
+        elapsed: 3986385,
         isRunning: true
       }
     ]
   };
+
+  componentDidMount() {
+    const TIME_INTERVAL = 1000;
+
+    this.intervalId = setInterval(() => {
+      const { timers } = this.state;
+
+      this.setState({
+        timers: timers.map(timer => {
+          const { elapsed, isRunning } = timer;
+
+          return {
+            ...timer,
+            elapsed: isRunning ? elapsed + TIME_INTERVAL : elapsed
+          };
+        })
+      });
+    }, TIME_INTERVAL);
+
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
+  }
 
   handleCreateFormSubmit = timer => {
     // update state with the new timer added
@@ -64,6 +88,19 @@ export default class App extends React.Component {
     });
   };
 
+  toggleTimer = timerId => {
+    const { timers } = this.state;
+
+    this.setState({
+      timers: timers.map(timer => {
+        return {
+          ...timer,
+          isRunning: timer.id === timerId ? !timer.isRunning : timer.isRunning
+        };
+      })
+    });
+  };
+
   render() {
     const { timers } = this.state;
     return (
@@ -83,6 +120,8 @@ export default class App extends React.Component {
               isRunning={isRunning}
               onFormSubmit={this.handleUpdateFormSubmit}
               onRemovePress={this.handleRemoveFormSubmit}
+              onStartPress={this.toggleTimer}
+              onStopPress={this.toggleTimer}
             />
           ))}
         </ScrollView>
