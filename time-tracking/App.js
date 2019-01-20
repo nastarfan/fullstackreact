@@ -1,5 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  KeyboardAvoidingView
+} from "react-native";
 import uuidv4 from "uuid/v4";
 
 import EditableTimer from "./components/EditableTimer";
@@ -43,7 +49,6 @@ export default class App extends React.Component {
         })
       });
     }, TIME_INTERVAL);
-
   }
 
   componentWillUnmount() {
@@ -108,23 +113,28 @@ export default class App extends React.Component {
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Timer</Text>
         </View>
-        <ScrollView style={styles.timerList}>
-          <ToggleableTimerForm onFormSubmit={this.handleCreateFormSubmit} />
-          {timers.map(({ id, title, project, elapsed, isRunning }) => (
-            <EditableTimer
-              key={id}
-              id={id}
-              title={title}
-              project={project}
-              elapsed={elapsed}
-              isRunning={isRunning}
-              onFormSubmit={this.handleUpdateFormSubmit}
-              onRemovePress={this.handleRemoveFormSubmit}
-              onStartPress={this.toggleTimer}
-              onStopPress={this.toggleTimer}
-            />
-          ))}
-        </ScrollView>
+        <KeyboardAvoidingView
+          style={styles.timerListContainer}
+          behavior="padding"
+        >
+          <ScrollView contentContainerStyle={styles.timerList}>
+            <ToggleableTimerForm onFormSubmit={this.handleCreateFormSubmit} />
+            {timers.map(({ id, title, project, elapsed, isRunning }) => (
+              <EditableTimer
+                key={id}
+                id={id}
+                title={title}
+                project={project}
+                elapsed={elapsed}
+                isRunning={isRunning}
+                onFormSubmit={this.handleUpdateFormSubmit}
+                onRemovePress={this.handleRemoveFormSubmit}
+                onStartPress={this.toggleTimer}
+                onStopPress={this.toggleTimer}
+              />
+            ))}
+          </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     );
   }
@@ -144,6 +154,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     textAlign: "center"
+  },
+  timerListContainer: {
+    flex: 1
   },
   timerList: {
     paddingBottom: 15
