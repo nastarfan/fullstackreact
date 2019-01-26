@@ -1,13 +1,22 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { Constants } from "expo";
+import { StyleSheet, Text, View } from "react-native";
 
-import Avatar from './components/Avatar';
+import Card from "./components/Card";
+import AuthorRow from "./components/AuthorRow";
 
 export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Avatar initials={"AS"} size={35} backgroundColor={"blue"} />
+        <Card
+          fullName={"Aulia Sabri"}
+          linkText={"Comments"}
+          onPressLinkText={() => {
+            console.log("Link pressed");
+          }}
+          image={{ uri: "https://unsplash.it/600/600" }}
+        />
       </View>
     );
   }
@@ -15,9 +24,8 @@ export default class App extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: Constants.statusBarHeight,
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: "#fff",
+  }
 });
