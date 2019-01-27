@@ -5,18 +5,36 @@ import PropTypes from "prop-types";
 import { getImageFromId } from "../utils/api";
 import Card from "./Card";
 
+const keyExtractor = ({ id }) => id.toString();
+
 export default class CardList extends Component {
-  const keyExtractor = ({id}) => id.toString();
   static propTypes = {
     items: PropTypes.arrayOf(
       PropTypes.shape({
         id: PropTypes.number.isRequired,
         author: PropTypes.string.isRequired
-      }),
-    ).isRequired,
+      })
+    ).isRequired
   };
 
-  render(){
-    return();
+  renderItem = ({ item: { id, author } }) => (
+    <Card
+      fullName={author}
+      image={{
+        uri: getImageFromId(id)
+      }}
+    />
+  );
+
+  render() {
+    const { items } = this.props;
+
+    return (
+      <FlatList
+        data={items}
+        renderItem={this.renderItem}
+        keyExtractor={this.keyExtractor}
+      />
+    );
   }
 }
