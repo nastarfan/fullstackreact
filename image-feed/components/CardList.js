@@ -33,7 +33,7 @@ export default class CardList extends Component {
       <FlatList
         data={items}
         renderItem={this.renderItem}
-        keyExtractor={this.keyExtractor}
+        keyExtractor={keyExtractor}
       />
     );
   }
