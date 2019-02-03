@@ -1,9 +1,16 @@
-import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
-import PropTypes from 'prop-types';
+import React from "react";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import PropTypes from "prop-types";
 
-export default function NavigationBar extends {
-    return();
+export default function NavigationBar({ title, leftText, onPressLeftText }) {
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity>
+        <Text style={styles.leftText}>{leftText}</Text>
+      </TouchableOpacity>
+      <Text style={styles.titleText}>{title}</Text>
+    </View>
+  );
 }
 
 NavigationBar.propTypes = {
@@ -13,11 +20,27 @@ NavigationBar.propTypes = {
 };
 
 NavigationBar.defaultProps = {
-  title: '',
-  leftText: '',
+  title: "",
+  leftText: "",
   onPressLeftText: () => {}
 };
 
 const style = StyleSheet.Create({
-
+  container: {
+    height: 40,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: "rgba(0,0,0,0.1)",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  leftText: {
+    position: "absolute",
+    left: 20,
+    top: 0,
+    bottom: 0,
+    justifyContent: "center"
+  },
+  titleText: {
+    fontWeight: "500"
+  }
 });

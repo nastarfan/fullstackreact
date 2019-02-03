@@ -5,6 +5,12 @@ import { Platform, StyleSheet, View } from "react-native";
 import Feed from "./screens/Feed";
 
 export default class App extends React.Component {
+  state = {
+    commentForItem: {},
+    showModal: false,
+    selectedItemId: null
+  };
+
   render() {
     return (
       <View style={styles.container}>
@@ -14,7 +20,8 @@ export default class App extends React.Component {
   }
 }
 
-const platformVersion = Platform.OS === 'ios' ? parseInt(Platform.version, 10) : Platform.version;
+const platformVersion =
+  Platform.OS === "ios" ? parseInt(Platform.version, 10) : Platform.version;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -23,6 +30,8 @@ const styles = StyleSheet.create({
   feed: {
     flex: 1,
     marginTop:
-      Platform.OS === 'android' || platformVersion < 11 ? Constants.statusBarHeight : 0,
+      Platform.OS === "android" || platformVersion < 11
+        ? Constants.statusBarHeight
+        : 0
   }
 });

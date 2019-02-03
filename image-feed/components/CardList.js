@@ -17,6 +17,7 @@ export default class CardList extends Component {
     ).isRequired
   };
 
+
   renderItem = ({ item: { id, author } }) => (
     <Card
       fullName={author}
