@@ -14,27 +14,37 @@ export default class CardList extends Component {
         id: PropTypes.number.isRequired,
         author: PropTypes.string.isRequired
       })
-    ).isRequired
+    ).isRequired,
+    commentsForItem: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string))
+      .isRequired,
+    onPressComment: PropTypes.func.isRequired
   };
 
+  renderItem = ({ item: { id, author } }) => {
+    const { commentsForItem, onPressComment } = this.props;
+    const comments = commentsForItem[id];
 
-  renderItem = ({ item: { id, author } }) => (
-    <Card
-      fullName={author}
-      image={{
-        uri: getImageFromId(id)
-      }}
-    />
-  );
+    return (
+      <Card
+        fullName={author}
+        image={{
+          uri: getImageFromId(id)
+        }}
+        linkText={`${comments ? comments.length : 0} Comments`}
+        onPressLinkText={() => onPressComment(id)}
+      />
+    );
+  };
 
   render() {
-    const { items } = this.props;
+    const { items, commentsForItem } = this.props;
 
     return (
       <FlatList
         data={items}
         renderItem={this.renderItem}
         keyExtractor={keyExtractor}
+        extraData={commentsForItem}
       />
     );
   }

@@ -5,8 +5,8 @@ import PropTypes from "prop-types";
 export default function NavigationBar({ title, leftText, onPressLeftText }) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity>
-        <Text style={styles.leftText}>{leftText}</Text>
+      <TouchableOpacity onPress={onPressLeftText} style={styles.leftText}>
+        <Text>{leftText}</Text>
       </TouchableOpacity>
       <Text style={styles.titleText}>{title}</Text>
     </View>
@@ -25,7 +25,7 @@ NavigationBar.defaultProps = {
   onPressLeftText: () => {}
 };
 
-const style = StyleSheet.Create({
+const styles = StyleSheet.create({
   container: {
     height: 40,
     borderBottomWidth: StyleSheet.hairlineWidth,
