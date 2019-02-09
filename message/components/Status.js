@@ -26,7 +26,13 @@ export default class Status extends Component {
 
     this.setState({ info });
 
-    setTimeout(() => this.handleChange("none"), 3000);
+    // setInterval(() => {
+    //   if (this.state.info != "none") {
+    //     this.handleChange("none");
+    //   } else {
+    //     this.handleChange("cellular");
+    //   }
+    // }, 3000);
   }
 
   componentWillUnmount() {
@@ -63,6 +69,7 @@ export default class Status extends Component {
     );
 
     if (Platform.OS === "ios") {
+      // render solid color manually on ios
       return (
         <View style={[styles.status, { backgroundColor }]}>{statusBar}</View>
       );
@@ -84,7 +91,7 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     height: 80,
-    alignItems: "center"
+    alignItems: "center",
   },
   bubble: {
     paddingHorizontal: 20,
