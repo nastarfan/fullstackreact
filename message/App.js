@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  TouchableHighlight,
+  Image
+} from "react-native";
 
 import Status from "./components/Status";
 import MessageList from "./components/MessageList";
@@ -21,14 +28,22 @@ export default class App extends Component {
         latitude: -6.196785,
         longitude: 106.684682
       })
-    ]
+    ],
+    fullscreenImageId: null
+  };
+
+  dismissFullscreenImage = () => {
+    this.setState({ fullscreenImageId: null });
   };
 
   renderMessageList = () => {
     const { messages } = this.state;
     return (
       <View style={styles.content}>
-        <MessageList messages={messages} onPressMessage={this.handlePressMessage}/>
+        <MessageList
+          messages={messages}
+          onPressMessage={this.handlePressMessage}
+        />
       </View>
     );
   };
@@ -39,6 +54,27 @@ export default class App extends Component {
 
   renderInputMethodEditor = () => {
     return <View style={styles.inputMethodEditor} />;
+  };
+
+  renderFullscreenImage = () => {
+    const { messages, fullscreenImageId } = this.state;
+
+    if (!fullscreenImageId) return null;
+
+    const image = messages.find(message => message.id === fullscreenImageId);
+
+    if (!image) return null;
+
+    const { uri } = image;
+
+    return (
+      <TouchableHighlight
+        style={styles.fullscreenOverlay}
+        onPress={this.dismissFullscreenImage}
+      >
+        <Image source={{ uri }} style={styles.fullscreenImage} />
+      </TouchableHighlight>
+    );
   };
 
   handlePressMessage = ({ id, type }) => {
@@ -62,6 +98,9 @@ export default class App extends Component {
           ]
         );
         break;
+      case "image":
+        this.setState({ fullscreenImageId: id });
+        break;
       default:
         break;
     }
@@ -74,6 +113,7 @@ export default class App extends Component {
         {this.renderMessageList()}
         {this.renderToolbar()}
         {this.renderInputMethodEditor()}
+        {this.renderFullscreenImage()}
       </View>
     );
   }
@@ -96,5 +136,14 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: "rgba(0,0,0,0.04)",
     backgroundColor: "white"
+  },
+  fullscreenOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "black",
+    zIndex: 2
+  },
+  fullscreenImage: {
+    flex: 1,
+    resizeMode: "contain"
   }
 });
