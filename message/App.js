@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 
 import Status from "./components/Status";
 import MessageList from "./components/MessageList";
@@ -28,7 +28,7 @@ export default class App extends Component {
     const { messages } = this.state;
     return (
       <View style={styles.content}>
-        <MessageList messages={messages} />
+        <MessageList messages={messages} onPressMessage={this.handlePressMessage}/>
       </View>
     );
   };
@@ -39,6 +39,32 @@ export default class App extends Component {
 
   renderInputMethodEditor = () => {
     return <View style={styles.inputMethodEditor} />;
+  };
+
+  handlePressMessage = ({ id, type }) => {
+    switch (type) {
+      case "text":
+        Alert.alert(
+          "Delete message?",
+          "Aree you sure want to permanently delete this message?",
+          [
+            { text: "Cancel", style: "cancel" },
+            {
+              text: "Delete",
+              style: "destructive",
+              onPress: () => {
+                const { messages } = this.state;
+                this.setState({
+                  messages: messages.filter(message => message.id !== id)
+                });
+              }
+            }
+          ]
+        );
+        break;
+      default:
+        break;
+    }
   };
 
   render() {
