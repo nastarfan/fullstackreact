@@ -11,6 +11,7 @@ import {
 
 import Status from "./components/Status";
 import MessageList from "./components/MessageList";
+import Toolbar from "./components/Toolbar";
 import {
   MessageShape,
   createTextMessage,
@@ -30,7 +31,8 @@ export default class App extends Component {
         longitude: 106.684682
       })
     ],
-    fullscreenImageId: null
+    fullscreenImageId: null,
+    isInputFocused: false
   };
 
   componentWillMount() {
@@ -49,7 +51,7 @@ export default class App extends Component {
     );
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     this.subscription.remove();
   }
 
@@ -67,10 +69,6 @@ export default class App extends Component {
         />
       </View>
     );
-  };
-
-  renderToolbar = () => {
-    return <View style={styles.toolbar} />;
   };
 
   renderInputMethodEditor = () => {
@@ -126,6 +124,38 @@ export default class App extends Component {
         break;
     }
   };
+
+  handlePressToolbarCamera = () => {};
+
+  handlePressToolbarLocation = () => {};
+
+  handleChangeFocus = isFocused => {
+    this.setState({ isInputFocused: isFocused });
+  };
+
+  handleSubmit = text => {
+    const { messages } = this.state;
+
+    this.setState({
+      messages: [createTextMessage(text), ...messages]
+    });
+  };
+
+  renderToolbar() {
+    const { isInputFocused } = this.state;
+
+    return (
+      <View style={styles.toolbar}>
+        <Toolbar
+          isFocused={isInputFocused}
+          onSubmit={this.handleSubmit}
+          onChangeFocus={this.onChangeFocus}
+          onPressCamera={this.handlePressToolbarCamera}
+          onPressLocation={this.handlePressToolbarLocation}
+        />
+      </View>
+    );
+  }
 
   render() {
     return (
