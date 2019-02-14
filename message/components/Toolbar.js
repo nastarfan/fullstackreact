@@ -3,15 +3,15 @@ import {
   View,
   Text,
   StyleSheet,
-  TouchableHighlight,
+  TouchableOpacity,
   TextInput
 } from "react-native";
 import PropTypes from "prop-types";
 
 const ToolbarButton = ({ title, onPress }) => (
-  <TouchableHighlight onPress={onPress}>
+  <TouchableOpacity onPress={onPress}>
     <Text style={styles.button}>{title}</Text>
-  </TouchableHighlight>
+  </TouchableOpacity>
 );
 
 ToolbarButton.propTypes = {

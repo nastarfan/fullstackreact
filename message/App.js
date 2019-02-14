@@ -118,7 +118,7 @@ export default class App extends Component {
         );
         break;
       case "image":
-        this.setState({ fullscreenImageId: id });
+        this.setState({ fullscreenImageId: id, isInputFocused: false });
         break;
       default:
         break;
@@ -127,7 +127,21 @@ export default class App extends Component {
 
   handlePressToolbarCamera = () => {};
 
-  handlePressToolbarLocation = () => {};
+  handlePressToolbarLocation = () => {
+    const { messages } = this.state;
+
+    navigator.geolocation.getCurrentPosition(position => {
+      const {
+        coords: { latitude, longitude }
+      } = position;
+
+      console.log(position);
+
+      this.setState({
+        messages: [createLocationMessage({ latitude, longitude }), ...messages]
+      });
+    });
+  };
 
   handleChangeFocus = isFocused => {
     this.setState({ isInputFocused: isFocused });
@@ -149,7 +163,7 @@ export default class App extends Component {
         <Toolbar
           isFocused={isInputFocused}
           onSubmit={this.handleSubmit}
-          onChangeFocus={this.onChangeFocus}
+          onChangeFocus={this.handleChangeFocus}
           onPressCamera={this.handlePressToolbarCamera}
           onPressLocation={this.handlePressToolbarLocation}
         />
