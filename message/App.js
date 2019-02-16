@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,38 +6,39 @@ import {
   Alert,
   TouchableHighlight,
   Image,
-  BackHandler
-} from "react-native";
+  BackHandler,
+} from 'react-native';
 
-import Status from "./components/Status";
-import MessageList from "./components/MessageList";
-import Toolbar from "./components/Toolbar";
+import Status from './components/Status';
+import MessageList from './components/MessageList';
+import Toolbar from './components/Toolbar';
 import {
   MessageShape,
   createTextMessage,
   createImageMessage,
-  createLocationMessage
-} from "./utils/MessageUtils";
+  createLocationMessage,
+} from './utils/MessageUtils';
+import ImageGrid from './components/ImageGrid';
 
 export default class App extends Component {
   state = {
     messages: [
-      createTextMessage("Hello"),
-      createTextMessage("World"),
-      createImageMessage("https://unsplash.it/300/300"),
-      createImageMessage("https://unsplash.it/300/300"),
+      createTextMessage('Hello'),
+      createTextMessage('World'),
+      createImageMessage('https://unsplash.it/300/300'),
+      createImageMessage('https://unsplash.it/300/300'),
       createLocationMessage({
         latitude: -6.196785,
-        longitude: 106.684682
-      })
+        longitude: 106.684682,
+      }),
     ],
     fullscreenImageId: null,
-    isInputFocused: false
+    isInputFocused: false,
   };
 
   componentWillMount() {
     this.subscription = BackHandler.addEventListener(
-      "hardwareBackPress",
+      'hardwareBackPress',
       () => {
         const { fullscreenImageId } = this.state;
 
@@ -47,7 +48,7 @@ export default class App extends Component {
         }
 
         return false;
-      }
+      },
     );
   }
 
@@ -71,9 +72,11 @@ export default class App extends Component {
     );
   };
 
-  renderInputMethodEditor = () => {
-    return <View style={styles.inputMethodEditor} />;
-  };
+  renderInputMethodEditor = () => (
+    <View style={styles.inputMethodEditor}>
+      <ImageGrid />
+    </View>
+  );
 
   renderFullscreenImage = () => {
     const { messages, fullscreenImageId } = this.state;
@@ -98,26 +101,26 @@ export default class App extends Component {
 
   handlePressMessage = ({ id, type }) => {
     switch (type) {
-      case "text":
+      case 'text':
         Alert.alert(
-          "Delete message?",
-          "Aree you sure want to permanently delete this message?",
+          'Delete message?',
+          'Are you sure want to permanently delete this message?',
           [
-            { text: "Cancel", style: "cancel" },
+            { text: 'Cancel', style: 'cancel' },
             {
-              text: "Delete",
-              style: "destructive",
+              text: 'Delete',
+              style: 'destructive',
               onPress: () => {
                 const { messages } = this.state;
                 this.setState({
-                  messages: messages.filter(message => message.id !== id)
+                  messages: messages.filter(message => message.id !== id),
                 });
-              }
-            }
-          ]
+              },
+            },
+          ],
         );
         break;
-      case "image":
+      case 'image':
         this.setState({ fullscreenImageId: id, isInputFocused: false });
         break;
       default:
@@ -130,28 +133,28 @@ export default class App extends Component {
   handlePressToolbarLocation = () => {
     const { messages } = this.state;
 
-    navigator.geolocation.getCurrentPosition(position => {
+    navigator.geolocation.getCurrentPosition((position) => {
       const {
-        coords: { latitude, longitude }
+        coords: { latitude, longitude },
       } = position;
 
       console.log(position);
 
       this.setState({
-        messages: [createLocationMessage({ latitude, longitude }), ...messages]
+        messages: [createLocationMessage({ latitude, longitude }), ...messages],
       });
     });
   };
 
-  handleChangeFocus = isFocused => {
+  handleChangeFocus = (isFocused) => {
     this.setState({ isInputFocused: isFocused });
   };
 
-  handleSubmit = text => {
+  handleSubmit = (text) => {
     const { messages } = this.state;
 
     this.setState({
-      messages: [createTextMessage(text), ...messages]
+      messages: [createTextMessage(text), ...messages],
     });
   };
 
@@ -187,28 +190,28 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: 'white',
   },
   content: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: 'white',
   },
   inputMethodEditor: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: 'white',
   },
   toolbar: {
     borderTopWidth: 1,
-    borderTopColor: "rgba(0,0,0,0.04)",
-    backgroundColor: "white"
+    borderTopColor: 'rgba(0,0,0,0.04)',
+    backgroundColor: 'white',
   },
   fullscreenOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "black",
-    zIndex: 2
+    backgroundColor: 'black',
+    zIndex: 2,
   },
   fullscreenImage: {
     flex: 1,
-    resizeMode: "contain"
-  }
+    resizeMode: 'contain',
+  },
 });
