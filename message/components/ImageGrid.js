@@ -23,12 +23,29 @@ export default class ImageGrrid extends Component {
   };
 
   state = {
-    images: [
-      { uri: 'https://picsum.photos/600/600/?image=10' },
-      { uri: 'https://picsum.photos/600/600/?image=20' },
-      { uri: 'https://picsum.photos/600/600/?image=30' },
-      { uri: 'https://picsum.photos/600/600/?image=40' },
-    ],
+    images: [],
+  };
+
+  componentDidMount() {
+    this.getImages();
+  }
+
+  getImages = async () => {
+    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+
+    if (status !== 'granted') {
+      console.log('CameraRoll permission denied');
+    }
+
+    const results = await CameraRoll.getPhotos({
+      first: 20,
+    });
+
+    const { edges } = results;
+
+    const loadedImages = edges.map(item => item.node.image);
+
+    this.setState({ images: loadedImages });
   };
 
   renderItem = ({ item: { uri }, size, marginTop, marginLeft }) => {
