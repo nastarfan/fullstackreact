@@ -14,6 +14,9 @@ import Grid from './Grid';
 const keyExtractor = ({ uri }) => uri;
 
 export default class ImageGrrid extends Component {
+  loading = false;
+  cursor = null;
+
   static propTypes = {
     onPressImage: PropTypes.func,
   };
@@ -30,7 +33,11 @@ export default class ImageGrrid extends Component {
     this.getImages();
   }
 
-  getImages = async () => {
+  getImages = async (after) => {
+    if (this.loading) return;
+
+    this.loading = true;
+
     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
 
     if (status !== 'granted') {
@@ -39,13 +46,20 @@ export default class ImageGrrid extends Component {
 
     const results = await CameraRoll.getPhotos({
       first: 20,
+      after,
     });
 
-    const { edges } = results;
+    const {
+      edges,
+      page_info: { has_next_page, end_cursor },
+    } = results;
 
     const loadedImages = edges.map(item => item.node.image);
 
-    this.setState({ images: loadedImages });
+    this.setState({ images: this.state.images.concat(loadedImages) }, () => {
+      this.loading = false;
+      this.cursor = has_next_page ? end_cursor : null;
+    });
   };
 
   renderItem = ({ item: { uri }, size, marginTop, marginLeft }) => {
@@ -59,6 +73,12 @@ export default class ImageGrrid extends Component {
     return <Image source={{ uri }} style={[style, styles.image]} />;
   };
 
+  getNextImages = () => {
+    if (!this.cursor) return;
+
+    this.getImages(this.cursor);
+  };
+
   render() {
     const { images } = this.state;
     return (
@@ -67,6 +87,7 @@ export default class ImageGrrid extends Component {
         renderItem={this.renderItem}
         keyExtractor={keyExtractor}
         numColumns={4}
+        onEndReached={this.getNextImages}
       />
     );
   }
