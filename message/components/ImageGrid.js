@@ -63,6 +63,8 @@ export default class ImageGrrid extends Component {
   };
 
   renderItem = ({ item: { uri }, size, marginTop, marginLeft }) => {
+    const { onPressImage } = this.props;
+
     const style = {
       width: size,
       height: size,
@@ -70,7 +72,16 @@ export default class ImageGrrid extends Component {
       marginTop,
     };
 
-    return <Image source={{ uri }} style={[style, styles.image]} />;
+    return (
+      <TouchableOpacity
+        key={uri}
+        activeOpacity={0.75}
+        onPress={() => onPressImage(uri)}
+        style={style}
+      >
+        <Image source={{ uri }} style={styles.image} />
+      </TouchableOpacity>
+    );
   };
 
   getNextImages = () => {

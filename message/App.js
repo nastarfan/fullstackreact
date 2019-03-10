@@ -74,7 +74,7 @@ export default class App extends Component {
 
   renderInputMethodEditor = () => (
     <View style={styles.inputMethodEditor}>
-      <ImageGrid />
+      <ImageGrid onPressImage={this.handlePressImage} />
     </View>
   );
 
@@ -128,12 +128,20 @@ export default class App extends Component {
     }
   };
 
+  handlePressImage = (uri) => {
+    const { messages } = this.state;
+
+    this.setState({
+      messages: [createImageMessage(uri), ...messages],
+    });
+  };
+
   handlePressToolbarCamera = () => {};
 
   handlePressToolbarLocation = () => {
     const { messages } = this.state;
 
-    navigator.geolocation.getCurrentPosition((position) => {
+    navigator.geolocation.getCurrentPosition(position => {
       const {
         coords: { latitude, longitude },
       } = position;
