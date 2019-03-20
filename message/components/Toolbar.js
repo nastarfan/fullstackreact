@@ -1,12 +1,12 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  TextInput
-} from "react-native";
-import PropTypes from "prop-types";
+  TextInput,
+} from 'react-native';
+import PropTypes from 'prop-types';
 
 const ToolbarButton = ({ title, onPress }) => (
   <TouchableOpacity onPress={onPress}>
@@ -16,12 +16,12 @@ const ToolbarButton = ({ title, onPress }) => (
 
 ToolbarButton.propTypes = {
   title: PropTypes.string.isRequired,
-  onPress: PropTypes.func.isRequired
+  onPress: PropTypes.func.isRequired,
 };
 
 export default class Toolbar extends Component {
   state = {
-    text: ""
+    text: '',
   };
 
   static propTypes = {
@@ -29,14 +29,14 @@ export default class Toolbar extends Component {
     onChangeFocus: PropTypes.func,
     onSubmit: PropTypes.func,
     onPressCamera: PropTypes.func,
-    onPressLocation: PropTypes.func
+    onPressLocation: PropTypes.func,
   };
 
   static defaultProps = {
     onChangeFocus: () => {},
     onSubmit: () => {},
     onPressCamera: () => {},
-    onPressLocation: () => {}
+    onPressLocation: () => {},
   };
 
   setInputRef = ref => {
@@ -76,7 +76,7 @@ export default class Toolbar extends Component {
     if (!text) return;
 
     onSubmit(text);
-    this.setState({ text: "" });
+    this.setState({ text: '' });
   };
 
   render() {
@@ -85,13 +85,13 @@ export default class Toolbar extends Component {
 
     return (
       <View style={styles.toolbar}>
-        <ToolbarButton title={"📷"} onPress={onPressCamera} />
-        <ToolbarButton title={"📍"} onPress={onPressLocation} />
+        <ToolbarButton title={'📷'} onPress={onPressCamera} />
+        <ToolbarButton title={'📍'} onPress={onPressLocation} />
         <View style={styles.inputContainer}>
           <TextInput
             style={styles.input}
-            underlineColorAndroid={"transparent"}
-            placeholder={"Send a message"}
+            underlineColorAndroid={'transparent'}
+            placeholder={'Send a message'}
             blurOnSubmit={false}
             value={text}
             onChangeText={this.handleChangeText}
@@ -108,31 +108,31 @@ export default class Toolbar extends Component {
 
 const styles = StyleSheet.create({
   toolbar: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 10,
     paddingHorizontal: 10,
     paddingLeft: 16,
-    backgroundColor: "white"
+    backgroundColor: 'white',
   },
   button: {
     top: -2,
     marginRight: 12,
     fontSize: 20,
-    color: "grey"
+    color: 'grey',
   },
   inputContainer: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.04)",
+    borderColor: 'rgba(0,0,0,0.04)',
     borderRadius: 16,
     paddingVertical: 4,
     paddingHorizontal: 12,
-    backgroundColor: "rgba(0,0,0,0.2)"
+    backgroundColor: 'rgba(0,0,0,0.02)',
   },
   input: {
     flex: 1,
-    fontSize: 18
-  }
+    fontSize: 18,
+  },
 });

@@ -100,6 +100,8 @@ export default class KeyboardState extends Component {
       keyboardHeight: height,
       keyboardAnimationDuration: duration,
     });
+
+    console.log(this.state.contentHeight);
   };
 
   render() {

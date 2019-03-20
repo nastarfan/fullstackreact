@@ -15,8 +15,8 @@ export const INPUT_METHOD = {
 };
 
 if (
-  Platform.OS === 'android' &&
-  UIManager.setLayoutAnimationEnabledExperimental
+  Platform.OS === 'android'
+  && UIManager.setLayoutAnimationEnabledExperimental
 ) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
@@ -27,9 +27,9 @@ export default class MessagingContainer extends Component {
     containerHeight: PropTypes.number.isRequired,
     contentHeight: PropTypes.number.isRequired,
     keyboardHeight: PropTypes.number.isRequired,
-    keyboardVisible: PropTypes.boolean.isRequired,
-    keyboardWillShow: PropTypes.boolean.isRequired,
-    keyboardWillHide: PropTypes.boolean.isRequired,
+    keyboardVisible: PropTypes.bool.isRequired,
+    keyboardWillHide: PropTypes.bool.isRequired,
+    keyboardWillShow: PropTypes.bool.isRequired,
     keyboardAnimationDuration: PropTypes.number.isRequired,
 
     // managing the IME type
@@ -46,7 +46,6 @@ export default class MessagingContainer extends Component {
     onChangeInputMethod: () => {},
   };
 
-
   componentDidMount() {
     this.subscription = BackHandler.addEventListener(
       'hardwareBackPress',
@@ -55,6 +54,7 @@ export default class MessagingContainer extends Component {
 
         if (inputMethod === INPUT_METHOD.CUSTOM) {
           onChangeInputMethod(INPUT_METHOD.NONE);
+          console.log('hiding the custom IME');
           return true;
         }
 
@@ -66,8 +66,10 @@ export default class MessagingContainer extends Component {
   componentWillReceiveProps(nextProps) {
     const { onChangeInputMethod } = this.props;
 
+    console.log("Current props: " + this.props.inputMethod + "Next props: " + nextProps.inputMethod);
     if (!this.props.keyboardVisible && nextProps.keyboardVisible) {
       // keyboard should be shown
+      console.log("changing input method to keyboard");
       onChangeInputMethod(INPUT_METHOD.KEYBOARD);
     } else if (
       // keyboard should be hiddne
@@ -78,6 +80,8 @@ export default class MessagingContainer extends Component {
       onChangeInputMethod(INPUT_METHOD.NONE);
     }
 
+    // change to INPUT_METHOD.CUSTOM is done directly on App.js
+
     // this.props.keyboardVisible && !nextProps.keyboardVisible
     // && this.props.inputMethod == INPUT_METHOD.CUSTOM
 
@@ -85,7 +89,9 @@ export default class MessagingContainer extends Component {
 
     const animation = LayoutAnimation.create(
       keyboardAnimationDuration,
-      Platform.OS === 'android' ? LayoutAnimation.Types.easeInEaseOut : LayoutAnimation.Types.keyboard,
+      Platform.OS === 'android'
+        ? LayoutAnimation.Types.easeInEaseOut
+        : LayoutAnimation.Types.keyboard,
       LayoutAnimation.Properties.opacity,
     );
     LayoutAnimation.configureNext(animation);
@@ -95,7 +101,7 @@ export default class MessagingContainer extends Component {
     this.subscription.remove();
   }
 
-  render(){
+  render() {
     const {
       children,
       renderInputMethodEditor,
@@ -105,6 +111,7 @@ export default class MessagingContainer extends Component {
       keyboardHeight,
       keyboardWillShow,
       keyboardWillHide,
+      keyboardVisible,
     } = this.props;
 
     // `containerHeight` is when the keyboard is not visible or not going to (keyboardWillShow == false)
@@ -119,15 +126,18 @@ export default class MessagingContainer extends Component {
     const showCustomInput =
       inputMethod === INPUT_METHOD.CUSTOM && !keyboardWillShow;
 
-    // keyboardHeight is 0 when hardware keyboard is connected, we still want to show custom IME if that's the case
+    // keyboardHeight is 0 when hardware keyboard is connected,
+    // we still want to show custom IME if that's the case
     const inputStyle = {
       height: showCustomInput ? keyboardHeight || 250 : 0,
     };
 
+    // console.log(inputMethod);
+
     return (
       <View style={containerStyle}>
-      {children}
-      <View style={inputStyle}>{renderInputMethodEditor()}</View>
+        {children}
+        <View style={inputStyle}>{renderInputMethodEditor()}</View>
       </View>
     );
   }
