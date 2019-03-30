@@ -39,23 +39,26 @@ export default class Contact extends Component {
 
   renderContact = ({ item }) => {
     // {} to tell that item is a property of an object
+    const {
+      navigation: { navigate },
+    } = this.props;
     const { name, avatar, phone } = item;
     return (
       <ContactListItem
         name={name}
         avatar={avatar}
         phone={phone}
-        onPress={this.handlePressContact}
+        onPress={() => navigate('Profile', { contact: item })}
       />
     );
   };
 
-  handlePressContact = () => {};
-
   render() {
     const { contacts, loading, error } = this.state;
 
-    const contactsSorted = contacts.sort((a, b) => a.name.localeCompare(b.name));
+    const contactsSorted = contacts.sort((a, b) =>
+      a.name.localeCompare(b.name),
+    );
 
     return (
       <View style={styles.container}>

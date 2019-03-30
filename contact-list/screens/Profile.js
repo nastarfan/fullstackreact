@@ -9,44 +9,30 @@ import { fetchRandomContact } from '../utils/api';
 import colors from '../utils/colors';
 
 export default class Profile extends Component {
-  state = {
-    contact: {},
-    loading: true,
-  };
-
-  componentDidMount = async () => {
-    const contact = await fetchRandomContact();
-    console.log(contact);
-    this.setState({ contact, loading: false });
-  };
-
   render() {
-    const { name, email, phone, cell, avatar } = this.state.contact;
-    const { loading } = this.state;
+    const {
+      navigation: {
+        state: { params },
+      },
+    } = this.props;
+    const { contact } = params;
+    const { name, email, phone, cell, avatar } = contact;
 
     return (
       <View style={styles.container}>
-        {!loading && (
-          <View style={styles.avatarSection}>
-            <ContactThumbnail
-              name={name}
-              phone={phone}
-              avatar={avatar}
-              onPress={() => {}}
-            />
-          </View>
-        )}
-        {!loading && (
-          <View style={styles.detailSection}>
-            <DetailListItem icon="mail" title="Email" subtitle={email} />
-            <DetailListItem icon="phone" title="Phone" subtitle={phone} />
-            <DetailListItem
-              icon="smartphone"
-              title="Personal"
-              subtitle={cell}
-            />
-          </View>
-        )}
+        <View style={styles.avatarSection}>
+          <ContactThumbnail
+            name={name}
+            phone={phone}
+            avatar={avatar}
+            onPress={() => {}}
+          />
+        </View>
+        <View style={styles.detailSection}>
+          <DetailListItem icon="mail" title="Email" subtitle={email} />
+          <DetailListItem icon="phone" title="Phone" subtitle={phone} />
+          <DetailListItem icon="smartphone" title="Personal" subtitle={cell} />
+        </View>
       </View>
     );
   }
