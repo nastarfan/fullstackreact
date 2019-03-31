@@ -14,6 +14,10 @@ import { fetchContacts } from '../utils/api';
 const keyExtractor = ({ phone }) => phone;
 
 export default class Contact extends Component {
+  static navigationOptions = {
+    title: 'Contacts',
+  };
+
   state = {
     contacts: [],
     loading: true,
