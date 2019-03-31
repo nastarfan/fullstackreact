@@ -2,7 +2,8 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 import Contacts from './screens/Contacts';
 import Profile from './screens/Profile';
-import colors from './utils/colors';
+import Favorites from './screens/Favorites';
+import User from './screens/User';
 
 const AppNavigator = createStackNavigator(
   {
@@ -12,9 +13,15 @@ const AppNavigator = createStackNavigator(
     Profile: {
       screen: Profile,
     },
+    Favorites: {
+      screen: Favorites,
+    },
+    User: {
+      screen: User,
+    },
   },
   {
-    initialRouteName: 'Contacts',
+    initialRouteName: 'User',
   },
 );
 
