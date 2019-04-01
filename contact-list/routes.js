@@ -17,58 +17,52 @@ const getTabBarIcon = icon => ({ tintColor }) => (
   <MaterialIcons name={icon} size={26} style={{ color: tintColor }} />
 );
 
-const ContactsScreens = createAppContainer(
-  createStackNavigator(
-    {
-      Contacts: {
-        screen: Contacts,
-      },
-      Profile: {
-        screen: Profile,
-      },
+const ContactsScreens = createStackNavigator(
+  {
+    Contacts: { // can be written Contacts: Contacts with further shorthand to be just Contacts
+      screen: Contacts,
     },
-    {
-      initialRouteName: 'Contacts',
-      navigationOptions: {
-        tabBarIcon: getTabBarIcon('list'),
-      },
+    Profile: {
+      screen: Profile,
     },
-  ),
+  },
+  {
+    initialRouteName: 'Contacts',
+    navigationOptions: {
+      tabBarIcon: getTabBarIcon('list'),
+    },
+  },
 );
 
-const FavoritesScreens = createAppContainer(
-  createStackNavigator(
-    {
-      Contacts: {
-        screen: Favorites,
-      },
-      Profile: {
-        screen: Profile,
-      },
+const FavoritesScreens = createStackNavigator(
+  {
+    Favorites: {
+      screen: Favorites,
     },
-    {
-      initialRouteName: 'Favorites',
-      navigationOptions: {
-        tabBarIcon: getTabBarIcon('star'),
-      },
+    Profile: {
+      screen: Profile,
     },
-  ),
+  },
+  {
+    initialRouteName: 'Favorites',
+    navigationOptions: {
+      tabBarIcon: getTabBarIcon('star'),
+    },
+  },
 );
 
-const UserScreens = createAppContainer(
-  createStackNavigator(
-    {
-      User: {
-        screen: User,
-      },
+const UserScreens = createStackNavigator(
+  {
+    User: {
+      screen: User,
     },
-    {
-      initialRouteName: 'User',
-      navigationOptions: {
-        tabBarIcon: getTabBarIcon('person'),
-      },
+  },
+  {
+    initialRouteName: 'User',
+    navigationOptions: {
+      tabBarIcon: getTabBarIcon('person'),
     },
-  ),
+  },
 );
 
 const AppNavigator = createBottomTabNavigator(

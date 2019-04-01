@@ -26,6 +26,8 @@ export default class Profile extends Component {
       },
     } = this.props;
     const { contact } = params;
+    // Alternatively we can use
+    // this.props.navigation.getParam('paramID', 'fallbackvalueifparamID unavailable')
     const { name, email, phone, cell, avatar } = contact;
 
     return (
