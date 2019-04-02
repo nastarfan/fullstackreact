@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  createBottomTabNavigator,
+  createDrawerNavigator,
   createStackNavigator,
   createAppContainer,
 } from 'react-navigation';
@@ -14,7 +14,7 @@ import Options from './screens/Options';
 
 import colors from './utils/colors';
 
-const getTabBarIcon = icon => ({ tintColor }) => (
+const getDrawerIcon = icon => ({ tintColor }) => (
   <MaterialIcons name={icon} size={26} style={{ color: tintColor }} />
 );
 
@@ -30,7 +30,7 @@ const ContactsScreens = createStackNavigator(
   {
     initialRouteName: 'Contacts',
     navigationOptions: {
-      tabBarIcon: getTabBarIcon('list'),
+      drawerIcon: getDrawerIcon('list'),
     },
   },
 );
@@ -47,7 +47,7 @@ const FavoritesScreens = createStackNavigator(
   {
     initialRouteName: 'Favorites',
     navigationOptions: {
-      tabBarIcon: getTabBarIcon('star'),
+      drawerIcon: getDrawerIcon('star'),
     },
   },
 );
@@ -65,12 +65,12 @@ const UserScreens = createStackNavigator(
     initialRouteName: 'User',
     mode: 'modal',
     navigationOptions: {
-      tabBarIcon: getTabBarIcon('person'),
+      drawerIcon: getDrawerIcon('person'),
     },
   },
 );
 
-const AppNavigator = createBottomTabNavigator(
+const AppNavigator = createDrawerNavigator(
   {
     Contacts: {
       screen: ContactsScreens,
@@ -84,17 +84,6 @@ const AppNavigator = createBottomTabNavigator(
   },
   {
     initialRouteName: 'Contacts',
-    tabBarPosition: 'bottom',
-    tabBarOptions: {
-      style: {
-        backgroundColor: colors.greyLight,
-      },
-      showLabel: false,
-      showIcon: true,
-      activeTintColor: colors.blue,
-      inactiveTintColor: colors.greyDark,
-      renderIndicator: () => null,
-    },
   },
 );
 

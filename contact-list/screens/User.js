@@ -8,12 +8,20 @@ import colors from '../utils/colors';
 import { fetchUserContact } from '../utils/api';
 
 export default class User extends Component {
-  static navigationOptions = ({ navigation: { navigate } }) => ({
+  static navigationOptions = ({ navigation: { navigate, toggleDrawer } }) => ({
     title: 'Me',
     headerTintColor: 'white',
     headerStyle: {
       backgroundColor: colors.blue,
     },
+    headerLeft: (
+      <MaterialIcons
+        name="menu"
+        size={24}
+        style={{ color: colors.black, marginLeft: 10 }}
+        onPress={() => toggleDrawer()}
+      />
+    ),
     headerRight: (
       <MaterialIcons
         name="settings"

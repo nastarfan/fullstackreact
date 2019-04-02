@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
+import {MaterialIcons} from '@expo/vector-icons';
 
 import ContactThumbnail from '../components/ContactThumbnail';
 import DetailListItem from '../components/DetailListItem';
@@ -8,14 +9,22 @@ import DetailListItem from '../components/DetailListItem';
 import colors from '../utils/colors';
 
 export default class Profile extends Component {
-  static navigationOptions = ({ navigation: { state: { params } } }) => {
+  static navigationOptions = ({ navigation: { state: { params }, toggleDrawer } }) => {
     const { contact: { name } } = params;
     return {
       title: name.split(' ')[0],
       headerTintColor: 'white',
       headerStyle: {
         backgroundColor: colors.blue,
-      }
+      },
+      headerLeft: (
+        <MaterialIcons
+          name="menu"
+          size={24}
+          style={{ color: colors.black, marginLeft: 10 }}
+          onPress={() => toggleDrawer()}
+        />
+      )
     }
   };
 
