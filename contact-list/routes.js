@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
   createStackNavigator,
   createAppContainer,
 } from 'react-navigation';
@@ -70,7 +70,7 @@ const UserScreens = createStackNavigator(
   },
 );
 
-const AppNavigator = createBottomTabNavigator(
+const AppNavigator = createMaterialTopTabNavigator(
   {
     Contacts: {
       screen: ContactsScreens,
@@ -85,6 +85,7 @@ const AppNavigator = createBottomTabNavigator(
   {
     initialRouteName: 'Contacts',
     tabBarPosition: 'bottom',
+    animationEnabled: true,
     tabBarOptions: {
       style: {
         backgroundColor: colors.greyLight,

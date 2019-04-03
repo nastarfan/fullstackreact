@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, ActivityIndicator } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
+
 import ContactThumbnail from '../components/ContactThumbnail';
 
 import colors from '../utils/colors';
 import { fetchUserContact } from '../utils/api';
+import store from '../store';
 
 export default class User extends Component {
   static navigationOptions = ({ navigation: { navigate } }) => ({
@@ -25,26 +27,28 @@ export default class User extends Component {
   });
 
   state = {
-    user: [],
-    loading: true,
-    error: false,
+    user: store.getState().user,
+    loading: store.getState().isFetchingUser,
+    error: store.getState().error,
   };
 
   componentDidMount = async () => {
-    try {
-      const user = await fetchUserContact();
+    this.unsubscribe = store.onChange(() =>
       this.setState({
-        user,
-        loading: false,
-        error: false,
-      });
-    } catch (e) {
-      this.setState({
-        loading: false,
-        error: true,
-      });
-    }
+        user: store.getState().user,
+        loading: store.getState().isFetchingUser,
+        error: store.getState().error,
+      }),
+    );
+
+    const user = await fetchUserContact();
+
+    store.setState({ user, isFetchingUser: false });
   };
+
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
   render() {
     const { user, loading, error } = this.state;
@@ -54,7 +58,8 @@ export default class User extends Component {
       <View style={styles.container}>
         {loading && <ActivityIndicator size="large" />}
         {error && <Text>Error...</Text>}
-        {!loading && !error && (
+
+        {!loading && (
           <ContactThumbnail avatar={avatar} name={name} phone={phone} />
         )}
       </View>
