@@ -20,7 +20,8 @@ const getDrawerIcon = icon => ({ tintColor }) => (
 
 const ContactsScreens = createStackNavigator(
   {
-    Contacts: { // can be written Contacts: Contacts with further shorthand to be just Contacts
+    Contacts: {
+      // can be written Contacts: Contacts with further shorthand to be just Contacts
       screen: Contacts,
     },
     Profile: {

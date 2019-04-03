@@ -22,8 +22,8 @@ export default class Contact extends Component {
     headerLeft: (
       <MaterialIcons
         name="menu"
-        size={24}
-        style={{ color: colors.black, marginLeft: 10 }}
+        size={28}
+        style={{ color: colors.black, marginLeft: 20 }}
         onPress={() => toggleDrawer()}
       />
     ),

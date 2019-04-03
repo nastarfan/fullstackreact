@@ -17,14 +17,6 @@ export default class Profile extends Component {
       headerStyle: {
         backgroundColor: colors.blue,
       },
-      headerLeft: (
-        <MaterialIcons
-          name="menu"
-          size={24}
-          style={{ color: colors.black, marginLeft: 10 }}
-          onPress={() => toggleDrawer()}
-        />
-      )
     }
   };
 

@@ -4,4 +4,6 @@ export default {
   grey: '#D8D8D8',
   greyDark: '#BBBBBB',
   black: '#000000',
+  red: 'rgb(223, 56, 22)',
+  violet: 'rgb(143, 79, 163)'
 };

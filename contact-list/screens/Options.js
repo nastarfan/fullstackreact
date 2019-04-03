@@ -11,8 +11,8 @@ export default class Options extends Component {
     headerLeft: (
       <MaterialIcons
         name="close"
-        size={24}
-        style={{ color: colors.black, marginLeft: 10 }}
+        size={28}
+        style={{ color: colors.black, marginLeft: 20 }}
         onPress={() => goBack()}
       />
     ),
